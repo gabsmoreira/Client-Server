@@ -10,3 +10,9 @@ Gabriel Moreira e Daniel Ruhman
 ## Diagrama de funcionamento
 
  ![Diagrama de funcionamento](Proj-1-Comunicacao/images/final.002.jpeg)
+
+
+## Definição do protocolo
+
+- HEAD: 2 bits com carga útil
+- EOP: 2 bits 
