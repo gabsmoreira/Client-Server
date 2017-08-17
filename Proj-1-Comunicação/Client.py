@@ -46,7 +46,7 @@ def main():
 
     # Transmite imagem
     print("Transmitindo .... {} bytes".format(txLen))
-    start = timeit.timeit()
+    start = time.time()
     com.sendData(txBuffer)
     
 
@@ -56,8 +56,8 @@ def main():
         pass
 
     # Encerra comunicação
-    stop = timeit.timeit()
-    print("Tempo de transmissão:  {} ms ".format((start-stop)*1000))
+    stop = time.time()
+    print("Tempo de transmissão:  {} ms ".format((stop-start)*1000))
     print("-------------------------")
     print("Comunicação encerrada")
     print("-------------------------")

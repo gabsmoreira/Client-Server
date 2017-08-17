@@ -37,7 +37,7 @@ def main():
     print("  porta : {}".format(com.fisica.name))
     print("-------------------------")
 
-
+    
     # espera o fim da transmissão
     while(com.tx.getIsBussy()):
         pass
@@ -48,9 +48,13 @@ def main():
     # Faz a recepção dos dados
 
     print ("Recebendo dados .... ")
-    rxBuffer, nRx = com.getData(txLen)
+    rxBuffer1, nRx1 = com.getData(1)
+    start = time.time()
+    rxBuffer2, nRx = com.getData(txLen-1)
+    rxBuffer = rxBuffer1+rxBuffer2
     print(nRx)
     
+    stop = time.time()
 
     # log
     print ("Lido              {} bytes ".format(nRx))
@@ -66,6 +70,8 @@ def main():
     f.close()
 
     # Encerra comunicação
+    print("Tempo de transmissão:  {} ms ".format((stop-start)*1000))
+
     print("-------------------------")
     print("Comunicação encerrada")
     print("-------------------------")
