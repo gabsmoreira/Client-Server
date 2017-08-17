@@ -2,7 +2,13 @@
 Gabriel Moreira e Daniel Ruhman
 
 
+## Diagrama de camadas
+
+ ![Diagrama de camadas](Proj-1-Comunica%C3%A7%C3%A3o/images/final.001.jpeg)
+
+
 ## Diagrama de funcionamento
 
- ![Diagrama de funcionamento](Proj-1-Comunica%C3%A7%C3%A3o/diagrama.001.jpeg)
+ ![Diagrama de funcionamento](Proj-1-Comunica%C3%A7%C3%A3o/images/final.002.jpeg)
+
 
