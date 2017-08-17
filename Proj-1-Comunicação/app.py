@@ -6,6 +6,8 @@ import Tkinter as tk
 import time
 from datetime import datetime
 from PIL import ImageTk, Image
+import Client
+import Server
 
 class Janela_Principal():
 
@@ -36,17 +38,18 @@ class Janela_Principal():
 
 
         #Botoes
-        self.button_treinar = tk.Button(self.window, text = "Send", height = 3, width = 30)
+        self.button_treinar = tk.Button(self.window, text = "SEND", height = 3, width = 30)
         self.button_treinar.grid(row = 1, columnspan = 1)
-        self.button_treinar.configure(command = None)
+        self.button_treinar.configure(command = self.Send)
 
-        self.button_Reconhecimento = tk.Button(self.window, text = "RECOGNIZE", height = 3, width = 30)
+        self.button_Reconhecimento = tk.Button(self.window, text = "RECEIVE", height = 3, width = 30)
         self.button_Reconhecimento.grid(row   = 2, columnspan = 1)
-        self.button_Reconhecimento.configure(command = None)
+        self.button_Reconhecimento.configure(command = self.Receive)
 
-        self.button_Data_Base = tk.Button(self.window, text = "ADD PERSON", height = 3, width = 30)
-        self.button_Data_Base.grid(row   = 3, columnspan = 1)
-        self.button_Data_Base.configure(command = None)
+        #self.button_des = tk.Button(self.window, text = "Disconnect", height = 3, width = 30)
+        #self.button_des.grid(row = 3, columnspan = 1)
+        #self.button_des.configure(command = self.Send)
+
 
 
     #Loop do codigo
@@ -54,18 +57,13 @@ class Janela_Principal():
         self.window.mainloop()
 
     #Acoes dos botoes
-    def treinar(self):
-        training.main_training()
+    def Receive(self):
+        Server.main()
 
-    def reconhecimento(self):
-        face_recognition.main()
+    def Send(self):
+        Client.main()
 
-    def Base(self):
-        database_creator.main_database()
-
-    def delete(self):
-        cl.create_file(training.getTargetNames(),self.e1.get())
-        #database_creator.delete()
+    
 
 #Loop do codigo
 app = Janela_Principal()

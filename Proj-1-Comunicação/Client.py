@@ -9,14 +9,16 @@
 
 from enlace import *
 import time
+import timeit
 
 # Serial Com Port
 #   para saber a sua porta, execute no terminal :
 #   python -m serial.tools.list_ports
 
 #serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
-serialName = "/dev/cu.usbmodem1441" # Mac    (variacao de)
+serialName = "/dev/cu.usbmodem1431" # Mac    (variacao de)
 #serialName = "COM3"                  # Windows(variacao de)
+#serialName = "COM3"
 
 def main():
     # Inicializa enlace
@@ -27,9 +29,6 @@ def main():
 
     # Endereco da imagem a ser transmitida
     imageR = "./imgs/imageC.png"
-
-    # Endereco da imagem a ser salva
-    imageW = "./imgs/recebida.png"
 
     # Log
     print("-------------------------")
@@ -42,26 +41,25 @@ def main():
     print (" - {}".format(imageR))
     print("-------------------------")
     txBuffer = open(imageR, 'rb').read()
-    txLen    = len(txBuffer)
+    txLen    = 3093
     print(txLen)
 
     # Transmite imagem
     print("Transmitindo .... {} bytes".format(txLen))
+    start = timeit.timeit()
     com.sendData(txBuffer)
+    
+
 
     # espera o fim da transmissão
     while(com.tx.getIsBussy()):
         pass
 
-    # Atualiza dados da transmissão
-    txSize = com.tx.getStatus()
-    print ("Transmitido       {} bytes ".format(txSize))
-
     # Encerra comunicação
+    stop = timeit.timeit()
+    print("Tempo de transmissão:  {} ms ".format((start-stop)*1000))
     print("-------------------------")
     print("Comunicação encerrada")
     print("-------------------------")
     com.disable()
 
-if __name__ == "__main__":
-    main()

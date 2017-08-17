@@ -15,7 +15,7 @@ import time
 #   python -m serial.tools.list_ports
 
 #serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
-serialName = "/dev/cu.usbmodem1441" # Mac    (variacao de)
+serialName = "/dev/cu.usbmodem1431" # Mac    (variacao de)
 #serialName = "COM3"                  # Windows(variacao de)
 
 def main():
@@ -41,14 +41,16 @@ def main():
     # espera o fim da transmissão
     while(com.tx.getIsBussy()):
         pass
-
+    txLen    = 3093
     # Atualiza dados da transmissão
     txSize = com.tx.getStatus()
-    print ("Transmitido       {} bytes ".format(txSize))
 
     # Faz a recepção dos dados
+
     print ("Recebendo dados .... ")
     rxBuffer, nRx = com.getData(txLen)
+    print(nRx)
+    
 
     # log
     print ("Lido              {} bytes ".format(nRx))
@@ -69,5 +71,4 @@ def main():
     print("-------------------------")
     com.disable()
 
-if __name__ == "__main__":
-    main()
+
