@@ -4,4 +4,4 @@ Gabriel Moreira e Daniel Ruhman
 
 ## Diagrama de funcionamento e camadas
 
-  - [Diagrama de Camadas](https://github.com/gabsmoreira/Client-Server/blob/master/Proj-1-Comunica%C3%A7%C3%A3o/diagrama.001.jpeg)
+ ![Diagrama](Proj-1-Comunica%C3%A7%C3%A3o/diagrama.001.jpeg)
