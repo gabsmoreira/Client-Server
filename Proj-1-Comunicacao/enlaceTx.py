@@ -29,14 +29,14 @@ class TX(object):
         self.threadMutex = False
         self.threadStop  = False
 
-    def thread(self):
-        """ TX thread, to send data in parallel with the code
+   def thread(self):
+        """ tx thread, to send data in parallel with the code
         """
-        while not self.threadStop:
-            if(self.threadMutex):
+        while not self.threadstop:
+            if(self.threadmutex):
                 print(self.buffer)
-                self.transLen    = self.fisica.write(self.buffer)
-                self.threadMutex = False
+                self.translen    = self.fisica.write(self.buffer)
+                self.threadmutex = false
 
     def threadStart(self):
         """ Starts TX thread (generate and run)

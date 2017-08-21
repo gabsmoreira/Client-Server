@@ -60,4 +60,4 @@ class enlace(object):
         Return the byte array and the size of the buffer
         """
         data = self.rx.getNData(size)
-        return(data, len(data))
+        return(data, len(data)) 
