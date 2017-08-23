@@ -44,8 +44,7 @@ def undoPackage(package):
     print("HEAD", head)
     print("EOP", eop)
     print("DATA", data)
-
-
+    return (head,eop,data)
 
 elements = [0, 200, 50, 25, 10, 255, 0]
 
