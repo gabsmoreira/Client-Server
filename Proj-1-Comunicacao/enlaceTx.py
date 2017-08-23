@@ -12,7 +12,7 @@ import time
 
 # Threads
 import threading
-
+from packing import Package
 # Class
 class TX(object):
     """ This class implements methods to handle the transmission
@@ -29,7 +29,7 @@ class TX(object):
         self.threadMutex = False
         self.threadStop  = False
 
-   def thread(self):
+    def thread(self):
         """ tx thread, to send data in parallel with the code
         """
         while not self.threadstop:
