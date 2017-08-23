@@ -36,9 +36,14 @@ class Package (object):
         return package
 
 
-    # Desempacota os dados
-    def undoPackage(self, package):
-        pass
+# # Desempacota os dados
+def undoPackage(package):
+    head = package[0:2]
+    eop = package[-2:]
+    data = package[2:-2]
+    print("HEAD", head)
+    print("EOP", eop)
+    print("DATA", data)
 
 
 
@@ -46,5 +51,7 @@ elements = [0, 200, 50, 25, 10, 255, 0]
 
 # Create bytearray from list of integers.
 values = bytearray(elements)
-
-print("PACKAGE",Package(values).buildPackage(len(values)))
+a=Package(values).buildPackage(len(values))
+print("PACKAGE",a)
+print(hex(a[2]))
+undoPackage(a)
