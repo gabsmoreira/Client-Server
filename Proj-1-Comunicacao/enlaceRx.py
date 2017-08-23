@@ -27,6 +27,7 @@ class RX(object):
         self.threadStop  = False
         self.threadMutex = True
         self.READLEN     = 1024
+        self.found       = False
 
     def thread(self):
         """ RX thread, to send data in parallel with the code
@@ -108,5 +109,14 @@ class RX(object):
         """ Clear the reception buffer
         """
         self.buffer = b""
+
+    def getHeadPayload(self):
+        while(self.found ==  False):
+            eop = self.buffer.find(b'\xfA\xf8\xf3\xf5')
+            if (eop != -1):
+                self.found = True
+                return self.buffer[:eop]
+            
+
 
 

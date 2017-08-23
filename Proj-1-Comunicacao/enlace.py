@@ -58,13 +58,15 @@ class enlace(object):
         package = Package(data).buildPackage()
         self.tx.sendBuffer(package)
 
-    def getData(self, size):
+    def getData(self):
         """ Get n data over the enlace interface
         Return the byte array and the size of the buffer
         """
         
-        package = self.rx.getNData(size)
+        package = self.rx.getHeadPayload()
         #print(package)
-        data = undoPackage(package)[2]
+        data = undoPackage(package)[1]
         #print(data)
-        return(data, len(data)) 
+        return(data, len(data))
+
+

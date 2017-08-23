@@ -41,23 +41,20 @@ def main():
     # espera o fim da transmissão
     while(com.tx.getIsBussy()):
         pass
-    txLen    = 3093
     # Atualiza dados da transmissão
     txSize = com.tx.getStatus()
 
     # Faz a recepção dos dados
 
     print ("Recebendo dados .... ")
-    rxBuffer1, nRx1 = com.getData(1)
+    rxBuffer, nRx = com.getData()
     start = time.time()
-    rxBuffer2, nRx = com.getData(txLen-1)
-    rxBuffer = rxBuffer1+rxBuffer2
     print(nRx)
     
-    stop = time.time()
 
     # log
     print ("Lido              {} bytes ".format(nRx))
+    stop = time.time()
 
     # Salva imagem recebida em arquivo
     print("-------------------------")

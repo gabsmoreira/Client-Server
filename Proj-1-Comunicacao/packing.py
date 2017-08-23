@@ -39,11 +39,9 @@ class Package (object):
 
 # # Desempacota os dados
 def undoPackage(package):
-    head = package[0:2]
-    eop = package[-2:]
-    data = package[2:-2]
+    head = package[0:3]
+    #eop = package[-6:]
+    data = package[3:-4]
     print("HEAD", head)
-    print("EOP", eop)
-    #print("DATA", data)
-    return (head,eop,data)
+    return (head,data)
 
