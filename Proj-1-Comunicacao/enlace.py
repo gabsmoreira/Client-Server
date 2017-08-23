@@ -64,5 +64,7 @@ class enlace(object):
         """
         
         package = self.rx.getNData(size)
+        #print(package)
         data = undoPackage(package)[2]
+        #print(data)
         return(data, len(data)) 

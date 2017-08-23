@@ -32,11 +32,11 @@ class TX(object):
     def thread(self):
         """ tx thread, to send data in parallel with the code
         """
-        while not self.threadstop:
-            if(self.threadmutex):
+        while not self.threadStop:
+            if(self.threadMutex):
                 print(self.buffer)
                 self.translen    = self.fisica.write(self.buffer)
-                self.threadmutex = false
+                self.threadMutex = False
 
     def threadStart(self):
         """ Starts TX thread (generate and run)
