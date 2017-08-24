@@ -46,13 +46,14 @@ def main():
     # Faz a recepção dos dados
 
     print ("Recebendo dados .... ")
-    rxBuffer, nRx = com.getData()
+    rxBuffer, nRx, real_nRx = com.getData()
     start = time.time()
     print(nRx)
     
-
+    lost_bytes = nRx-real_nRx
     # log
-    print ("Lido              {} bytes ".format(nRx))
+    print ("Lido              {} bytes ".format(real_nRx))
+    print ("Perdas            {} bytes ".format(lost_bytes))
     stop = time.time()
 
     # Salva imagem recebida em arquivo

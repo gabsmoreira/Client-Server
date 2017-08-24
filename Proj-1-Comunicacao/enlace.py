@@ -67,6 +67,6 @@ class enlace(object):
         #print(package)
         data = undoPackage(package)
         #print(data)
-        return(data[0], data[1])
+        return(data[0], data[1],(len(data[0])))
 
 
