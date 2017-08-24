@@ -10,10 +10,10 @@ class Package (object):
         self.data = data
         self.dataLen = len(data)
         self.headSTART  = 0xFF
-        self.eopSTART = 0xFAF8F3f5
+        self.eopSTART = 0xFAF8F3F5
         self.headStruct = Struct("start" / Int8ub,
                             "size"  / Int16ub )
-        self.eopStruct = Struct("start" / Int64ub)
+        self.eopStruct = Struct("start" / Int32ub)
 
     # Constroi o HEAD de acordo com as informacoes setadas na funcao __init__ e retorna o HEAD
     def buildHead(self):
@@ -44,7 +44,7 @@ def undoPackage(package):
     data = package[3:-4]
     print("HEAD", head)
     # print("EOP", eop)
-    print("DATA", data)
+    #print("DATA", data)
     return (head,data)
 
 elements = [0, 200, 50, 25, 10, 255, 0]

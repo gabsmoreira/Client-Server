@@ -112,8 +112,9 @@ class RX(object):
 
     def getHeadPayload(self):
         while(self.found ==  False):
-            eop = self.buffer.find(b'\xfA\xf8\xf3\xf5')
+            eop = self.buffer.find(b'\xfa\xf8\xf3\xf5')
             if (eop != -1):
+                print("achei")
                 self.found = True
                 return self.buffer[:eop]
             
