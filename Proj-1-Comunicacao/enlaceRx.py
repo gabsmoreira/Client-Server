@@ -115,7 +115,7 @@ class RX(object):
             if (eop != -1):
                 print("achei")
                 self.found = True
-                return self.buffer
+                return self.buffer[:eop]
             
 
 

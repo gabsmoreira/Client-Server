@@ -34,8 +34,7 @@ class TX(object):
         """
         while not self.threadStop:
             if(self.threadMutex):
-                print(self.buffer)
-                self.translen    = self.fisica.write(self.buffer)
+                self.transLen    = self.fisica.write(self.buffer)
                 self.threadMutex = False
 
     def threadStart(self):

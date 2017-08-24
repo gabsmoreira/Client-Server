@@ -27,18 +27,19 @@ class Package (object):
         #print(len(self.data)) 
         package += self.data
         package += self.eopSTART
+        print(package)
         return package
 
 
 # # Desempacota os dados
 def undoPackage(package):
-    head = package[0:3]
-    eop = package[-4:]
-    data = package[3:-4]
-    print("HEAD", head)
+    print(package)
+    size = int(binascii.hexlify(package[2:4]), 16) 
+    print("size",size)
+    payload = package[4:] #A partir do 4
     # print("EOP", eop)
     #print("DATA", data)
-    return (head,data, eop)
+    return (payload,size)
 
 # elements = [0, 200, 50, 25, 10, 255, 0]
 
