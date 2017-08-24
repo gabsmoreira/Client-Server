@@ -65,7 +65,7 @@ class enlace(object):
         
         package = self.rx.getHeadPayload()
         #print(package)
-        data = undoPackage(package)[1]
+        data = undoPackage(package)
         #print(data)
         return(data, len(data))
 
