@@ -10,10 +10,10 @@ class Package (object):
         self.data = data
         self.dataLen = len(data)
         self.headSTART  = 0xFF
-        self.eopSTART = 0xFAF8F3F5
+        self.eopSTART = bytearray([0xFA,0xF8,0xF3,0xF5])
         self.headStruct = Struct("start" / Int8ub,
                             "size"  / Int16ub )
-        self.eopStruct = Struct("start" / Int32ub)
+        
 
     # Constroi o HEAD de acordo com as informacoes setadas na funcao __init__ e retorna o HEAD
     def buildHead(self):
@@ -21,33 +21,26 @@ class Package (object):
         print("HEAD",head)                 
         return(head)
 
-    # Constroi o EOP de acordo com as informacoes setadas na funcao __init__ e retorna o EOP
-    def buildEOP (self):
-        eop = self.eopStruct.build(dict(start = self.eopSTART))
-        print("EOP",eop)
-        return eop
-
-
     # Constroi o PACKAGE ultilizando as funcoes buildHead e buildEOP, retorna o PACKAGE
     def buildPackage(self):
         package = self.buildHead()
         #print(len(self.data)) 
         package += self.data
-        package += self.buildEOP()
+        package += self.eopSTART
         return package
 
 
 # # Desempacota os dados
 def undoPackage(package):
     head = package[0:3]
-    # eop = package[-4:]
+    eop = package[-4:]
     data = package[3:-4]
     print("HEAD", head)
     # print("EOP", eop)
     #print("DATA", data)
-    return (head,data)
+    return (head,data, eop)
 
-elements = [0, 200, 50, 25, 10, 255, 0]
+# elements = [0, 200, 50, 25, 10, 255, 0]
 
 # Create bytearray from list of integers.
 # values = bytearray(elements)

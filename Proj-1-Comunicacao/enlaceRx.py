@@ -37,7 +37,6 @@ class RX(object):
                 rxTemp, nRx = self.fisica.read(self.READLEN)
                 if (nRx > 0):
                     self.buffer += rxTemp
-                print(self.buffer)
                 time.sleep(0.001)
 
     def threadStart(self):
@@ -116,7 +115,7 @@ class RX(object):
             if (eop != -1):
                 print("achei")
                 self.found = True
-                return self.buffer[:eop]
+                return self.buffer
             
 
 
