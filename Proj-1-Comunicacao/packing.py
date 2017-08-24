@@ -34,18 +34,17 @@ class Package (object):
 # # Desempacota os dados
 def undoPackage(package):
     print(package)
-    size = int(binascii.hexlify(package[2:4]), 16) 
+    size = int(binascii.hexlify(package[1:3]), 16) 
     print("size",size)
-    payload = package[4:] #A partir do 4
+    payload = package[3:] #A partir do 4
     # print("EOP", eop)
     #print("DATA", data)
     return (payload,size)
 
-# elements = [0, 200, 50, 25, 10, 255, 0]
+elements = [0, 200, 50, 25, 10, 255, 0]
 
-# Create bytearray from list of integers.
+#Create bytearray from list of integers.
 # values = bytearray(elements)
-# a=Package(values).buildPackage(len(values))
+# a=Package(values).buildPackage()
 # print("PACKAGE",a)
-# print(hex(a[2]))
 # undoPackage(a)
