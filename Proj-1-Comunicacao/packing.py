@@ -41,7 +41,7 @@ class Package (object):
 def undoPackage(package):
     head = package[0:3]
     #eop = package[-6:]
-    data = package[3:-4]
+    data = package[3:-2]
     print("HEAD", head)
     return (head,data)
 
