@@ -38,7 +38,10 @@ class fisica(object):
                                   self.bytesize,
                                   self.parity,
                                   self.stop,
-                                  self.timeout)
+                                  self.timeout,
+                                  True
+                                  )
+        self.flush()
 
 
     def close(self):
@@ -74,7 +77,6 @@ class fisica(object):
         sides of communication.
         """
         nTx = self.port.write(self.encode(txBuffer))
-        self.port.flush()
         return(nTx/2)
 
     def read(self, nBytes):
