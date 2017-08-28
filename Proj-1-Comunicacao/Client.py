@@ -44,22 +44,42 @@ def main():
     txLen = (len(txBuffer))
     print(txLen)
 
-    # Transmite imagem
-    print("Transmitindo .... {} bytes".format(txLen))
-    start = time.time()
-    com.sendData(txBuffer)
+    # Send sync
+    com.sendSync()
+    print("Sent sync")
+
+    print ("Esperando sync")
+    rxBuffer, nRx, real_nRx, package_type = com.getData()
     
+    if package_type == "sync":
+        rxBuffer, nRx, real_nRx, package_type = com.getData()
+        com.sendACK()
+    
+    if package_type == "ACK":
+        # Transmite imagem
+        print("Transmitindo .... {} bytes".format(txLen))
+        start = time.time()
+        com.sendData(txBuffer)
+        
 
 
-    # espera o fim da transmissão
-    while(com.tx.getIsBussy()):
-        pass
+        # espera o fim da transmissão
+        while(com.tx.getIsBussy()):
+            pass
 
-    # Encerra comunicação
-    stop = time.time()
-    print("Tempo de transmissão:  {} ms ".format((stop-start)*1000))
-    print("-------------------------")
-    print("Comunicação encerrada")
-    print("-------------------------")
-    com.disable()
+        # Encerra comunicação
+        stop = time.time()
+        print("Tempo de transmissão:  {} ms ".format((stop-start)*1000))
+        print("-------------------------")
+        print("Comunicação encerrada")
+        print("-------------------------")
+        com.disable()
+        
+
+
+
+
+
+
+    
 

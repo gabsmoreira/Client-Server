@@ -55,7 +55,7 @@ class enlace(object):
     def sendData(self, data):
         """ Send data over the enlace interface
         """
-        package = Package(data).buildPackage()
+        package = Package(data,"data").buildPackage()
         self.tx.sendBuffer(package)
 
     def getData(self):
@@ -67,6 +67,18 @@ class enlace(object):
         #print(package)
         data = undoPackage(package)
         #print(data)
-        return(data[0], data[1],(len(data[0])))
+        return(data[0], data[1],(len(data[0])),data[2])
+
+    def sendSync(self):
+        package = Package(None,"sync").buildPackage()
+        self.tx.sendBuffer(package)
+
+    def sendACK(self):
+        package = Package(None,"ACK").buildPackage()
+        self.tx.sendBuffer(package)
+    
+    def sendNACK(self):
+        package = Package(None,"NACK").buildPackage()
+        self.tx.sendBuffer(package)
 
 

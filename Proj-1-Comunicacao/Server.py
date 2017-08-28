@@ -46,9 +46,35 @@ def main():
     # Faz a recepção dos dados
 
     print ("Recebendo dados .... ")
-    rxBuffer, nRx, real_nRx = com.getData()
+    rxBuffer, nRx, real_nRx, package_type = com.getData()
+
+
+    if package_type == "sync":
+        print("Sync recebido")
+        rxBuffer, nRx, real_nRx, package_type = com.getData()
+        com.sendSync()
+        com.sendACK()
+    else:
+        com.sendNACK()
+
+    if package_type == "ACK":
+        print("ACK recebido")
+        rxBuffer, nRx, real_nRx, package_type = com.getData()
+
+    else:
+        print("ERRO na comunicação")
+        print("NACK recebido")
+
+
+
+
+
+
+
     start = time.time()
     print(nRx)
+
+    
     
     lost_bytes = nRx-real_nRx
     # log
