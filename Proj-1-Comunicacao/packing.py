@@ -17,7 +17,11 @@ class Package (object):
             self.dataType = 0x03
         
         self.data = data
-        self.dataLen = len(data)
+        if len(data) == None:
+            self.dataLen = 0
+        else:
+            self.dataLen = len(data)
+        
         self.headSTART  = 0xFF
         self.eopSTART = bytearray([0xFA,0xF8,0xF3,0xF5])
         self.headStruct = Struct("start" / Int8ub, "size"  / Int16ub, "type" / Int8ub )
