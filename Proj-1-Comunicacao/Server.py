@@ -46,58 +46,37 @@ def main():
     # Faz a recepção dos dados
 
     print ("Recebendo dados .... ")
-    rxBuffer, nRx, real_nRx, package_type = com.getData()
-
-
-    if package_type == "sync":
-        print("Sync recebido")
-        rxBuffer, nRx, real_nRx, package_type = com.getData()
-        com.sendSync()
-        com.sendACK()
-    else:
-        com.sendNACK()
-
-    if package_type == "ACK":
-        print("ACK recebido")
+    if com.waitConnection():
         rxBuffer, nRx, real_nRx, package_type = com.getData()
 
-    else:
-        print("ERRO na comunicação")
-        print("NACK recebido")
 
+        start = time.time()
+        print(nRx)
 
+        
+        
+        lost_bytes = nRx-real_nRx
+        # log
+        print ("Lido              {} bytes ".format(real_nRx))
+        print ("Perdas            {} bytes ".format(lost_bytes))
+        stop = time.time()
 
+        # Salva imagem recebida em arquivo
+        print("-------------------------")
+        print ("Salvando dados no arquivo :")
+        print (" - {}".format(imageW))
+        f = open(imageW, 'wb')
+        f.write(rxBuffer)
 
+        # Fecha arquivo de imagem
+        f.close()
 
+        # Encerra comunicação
+        print("Tempo de transmissão:  {} ms ".format((stop-start)*1000))
 
-
-    start = time.time()
-    print(nRx)
-
-    
-    
-    lost_bytes = nRx-real_nRx
-    # log
-    print ("Lido              {} bytes ".format(real_nRx))
-    print ("Perdas            {} bytes ".format(lost_bytes))
-    stop = time.time()
-
-    # Salva imagem recebida em arquivo
-    print("-------------------------")
-    print ("Salvando dados no arquivo :")
-    print (" - {}".format(imageW))
-    f = open(imageW, 'wb')
-    f.write(rxBuffer)
-
-    # Fecha arquivo de imagem
-    f.close()
-
-    # Encerra comunicação
-    print("Tempo de transmissão:  {} ms ".format((stop-start)*1000))
-
-    print("-------------------------")
-    print("Comunicação encerrada")
-    print("-------------------------")
-    com.disable()
+        print("-------------------------")
+        print("Comunicação encerrada")
+        print("-------------------------")
+        com.disable()
 
 

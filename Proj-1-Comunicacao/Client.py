@@ -36,27 +36,17 @@ def main():
     print("  porta : {}".format(com.fisica.name))
     print("-------------------------")
 
-    # Carrega imagem
-    print ("Carregando imagem para transmissão :")
-    print (" - {}".format(imageR))
-    print("-------------------------")
-    txBuffer = open(imageR, 'rb').read()
-    txLen = (len(txBuffer))
-    print(txLen)
 
-    # Send sync
-    com.sendSync()
-    print("Sent sync")
+    if com.establishConnection():
+        # Carrega imagem
+        print ("Carregando imagem para transmissão :")
+        print (" - {}".format(imageR))
+        print("-------------------------")
+        txBuffer = open(imageR, 'rb').read()
+        txLen = (len(txBuffer))
+        print(txLen)
 
-    print ("Esperando sync")
-    rxBuffer, nRx, real_nRx, package_type = com.getData()
-    
-    if package_type == "sync":
-        rxBuffer, nRx, real_nRx, package_type = com.getData()
-        com.sendACK()
-    
-    if package_type == "ACK":
-        # Transmite imagem
+
         print("Transmitindo .... {} bytes".format(txLen))
         start = time.time()
         com.sendData(txBuffer)

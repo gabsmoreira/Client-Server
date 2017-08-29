@@ -15,7 +15,7 @@ class Janela_Principal():
 
         self.window = tk.Tk()
         self.window.geometry("298x298+100+100")
-        self.window.title("Transmission")
+        self.window.title("GATONET")
         self.window.configure(background = 'white')
         self.window.resizable(False, False)
 

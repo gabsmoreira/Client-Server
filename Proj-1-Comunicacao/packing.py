@@ -50,24 +50,24 @@ def undoPackage(package):
     print("size",size)
     type_package = package[3:4]
 
-    if type_package == 0x00:
+    if type_package == b'\x00':
         type_package = "data"
-    elif type_package == 0x01:
+    elif type_package == b'\x01':
         type_package = "sync"
-    elif type_package == 0x02:
+    elif type_package == b'\x02':
         type_package = "ACK"
-    elif type_package == 0x03:
+    elif type_package == b'\x03':
         type_package = "NACK"
     payload = package[4:] #A partir do 4
     # print("EOP", eop)
     #print("DATA", data)
     return (payload,size,type_package)
 
-# elements = [0, 200, 50, 25, 10, 255, 0]
+elements = [0, 200, 50, 25, 10, 255, 23]
 
 # Create bytearray from list of integers.
 # values = bytearray(elements)
-# a = Package(values)
+# a = Package(values,"sync").buildPackage()
 # print("PACKAGE",a)
-# undoPackage(a)
-# a.dataLen
+# b = undoPackage(a)
+# print(b)

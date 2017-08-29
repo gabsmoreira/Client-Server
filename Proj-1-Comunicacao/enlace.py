@@ -33,6 +33,9 @@ class enlace(object):
         self.rx          = RX(self.fisica)
         self.tx          = TX(self.fisica)
         self.connected   = False
+        self.sync = Package(None,"sync").buildPackage()
+        self.ACK = Package(None,"ACK").buildPackage()
+        self.NACK = Package(None,"NACK").buildPackage()
 
     def enable(self):
         """ Enable reception and transmission
@@ -68,17 +71,37 @@ class enlace(object):
         data = undoPackage(package)
         #print(data)
         return(data[0], data[1],(len(data[0])),data[2])
+        
 
-    def sendSync(self):
-        package = Package(None,"sync").buildPackage()
-        self.tx.sendBuffer(package)
+    def waitConnection(self):
+        while !self.connected:
+            response = self.getData()
+            print("Waiting sync...)
+            if response[3] == "sync":
+                print("Sync received")
+                self.sendData(self.sync)
+                self.sendData(self.ACK)
+                response = self.getData()
+                print("Ready to receive package")
+                return True
+            else:
+                return False
 
-    def sendACK(self):
-        package = Package(None,"ACK").buildPackage()
-        self.tx.sendBuffer(package)
-    
-    def sendNACK(self):
-        package = Package(None,"NACK").buildPackage()
-        self.tx.sendBuffer(package)
+        
+    def establishConnection(self):
+        self.sendData(self.sync)
+        while !self.connected:
+            response = self.getData()
+            print("Waiting sync...)
+            if response[3] == "sync":
+                print("Sync received")
+                response = self.getData()
+                if response[3] == "ACK":
+                    print("ACK received")
+                    return True
+            else:
+                return False                    
 
 
+                    
+                
