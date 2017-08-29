@@ -40,7 +40,7 @@ class Package (object):
         #print(len(self.data)) 
         package += self.data
         package += self.eopSTART
-        print(package)
+        #print(package)
         return package
 
 

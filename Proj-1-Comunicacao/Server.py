@@ -47,7 +47,10 @@ def main():
 
     print ("Recebendo dados .... ")
     if com.waitConnection():
-        rxBuffer, nRx, real_nRx, package_type = com.getData()
+        response = com.getData()
+        while response == None:
+                response = com.getData()
+        rxBuffer, nRx, real_nRx, package_type = response
 
 
         start = time.time()
@@ -78,5 +81,16 @@ def main():
         print("Comunicação encerrada")
         print("-------------------------")
         com.disable()
+    else:
+        f.close()
+
+        # Encerra comunicação
+        print("Tempo de transmissão:  {} ms ".format((stop-start)*1000))
+
+        print("-------------------------")
+        print("Comunicação encerrada")
+        print("-------------------------")
+        com.disable()
+        
 
 
