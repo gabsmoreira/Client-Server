@@ -33,9 +33,6 @@ class enlace(object):
         self.rx          = RX(self.fisica)
         self.tx          = TX(self.fisica)
         self.connected   = False
-        self.sync = Package(None,"sync").buildPackage()
-        self.ACK = Package(None,"ACK").buildPackage()
-        self.NACK = Package(None,"NACK").buildPackage()
 
     def enable(self):
         """ Enable reception and transmission
@@ -61,6 +58,19 @@ class enlace(object):
         package = Package(data,"data").buildPackage()
         self.tx.sendBuffer(package)
 
+
+    def sendACK(self):
+        package = Package(None,"ACK").buildPackage()
+        self.tx.sendBuffer(package)
+    
+    def sendNACK(self):
+        package = Package(None,"NACK").buildPackage()
+        self.tx.sendBuffer(package)
+    
+    def sendSync(self):
+        package = Package(None,"sync").buildPackage()
+        self.tx.sendBuffer(package)
+
     def getData(self):
         """ Get n data over the enlace interface
         Return the byte array and the size of the buffer
@@ -76,11 +86,12 @@ class enlace(object):
     def waitConnection(self):
         while self.connected ==  False:
             response = self.getData()
+            print(response)
             print("Waiting sync...")
             if response[3] == "sync":
                 print("Sync received")
-                self.sendData(self.sync)
-                self.sendData(self.ACK)
+                self.sendSync()
+                self.sendACK()
                 response = self.getData()
                 print("Ready to receive package")
                 return True
@@ -89,7 +100,7 @@ class enlace(object):
 
         
     def establishConnection(self):
-        self.sendData(self.sync)
+        self.sendSync
         while self.connected ==  False:
             response = self.getData()
             print("Waiting sync..")

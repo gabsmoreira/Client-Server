@@ -48,7 +48,7 @@ class Package (object):
 def undoPackage(package):
     print(package)
     size = int(binascii.hexlify(package[1:3]), 16) 
-    print("size",size)
+    # print("size",size)
     type_package = package[3:4]
 
     if type_package == b'\x00':
