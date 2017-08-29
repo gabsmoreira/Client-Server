@@ -74,7 +74,7 @@ class enlace(object):
         
 
     def waitConnection(self):
-        while !self.connected:
+        while self.connected ==  False:
             response = self.getData()
             print("Waiting sync...)
             if response[3] == "sync":
@@ -90,7 +90,7 @@ class enlace(object):
         
     def establishConnection(self):
         self.sendData(self.sync)
-        while !self.connected:
+        while self.connected ==  False:
             response = self.getData()
             print("Waiting sync...)
             if response[3] == "sync":
