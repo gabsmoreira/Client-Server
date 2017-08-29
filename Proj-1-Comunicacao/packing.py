@@ -17,8 +17,9 @@ class Package (object):
             self.dataType = 0x03
         
         self.data = data
-        if len(data) == None:
+        if self.data == None:
             self.dataLen = 0
+            self.data = bytearray([])
         else:
             self.dataLen = len(data)
         
@@ -30,7 +31,7 @@ class Package (object):
     # Constroi o HEAD de acordo com as informacoes setadas na funcao __init__ e retorna o HEAD
     def buildHead(self):
         head = self.headStruct.build(dict(start = self.headSTART,size  = self.dataLen, type = self.dataType))
-        print("HEAD",head)                 
+        # print("HEAD",head)                 
         return(head)
 
     # Constroi o PACKAGE ultilizando as funcoes buildHead e buildEOP, retorna o PACKAGE
@@ -63,7 +64,7 @@ def undoPackage(package):
     #print("DATA", data)
     return (payload,size,type_package)
 
-elements = [0, 200, 50, 25, 10, 255, 23]
+# elements = [0, 200, 50, 25, 10, 255, 23]
 
 # Create bytearray from list of integers.
 # values = bytearray(elements)
