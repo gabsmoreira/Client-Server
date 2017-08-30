@@ -50,8 +50,6 @@ def main():
         time.sleep(0.5)
         response = com.getData()
         print(response)
-        if response == None:
-            response = com.getData()
         rxBuffer, nRx, real_nRx, package_type = response
 
 
@@ -94,5 +92,4 @@ def main():
         print("-------------------------")
         com.disable()
         
-
 

@@ -77,7 +77,7 @@ class enlace(object):
         """
         
         package = self.rx.getHeadPayload()
-        #print(package)
+        print(package)
         data = undoPackage(package)
         #print(data)
         return(data[0], data[1],(len(data[0])),data[2])
@@ -102,10 +102,10 @@ class enlace(object):
         while self.connected ==  False:
             response = self.getData()
             print("Waiting sync..")
-            if response[3] == "sync":
+            if response[3] == "ACK" or "sync":
                 print("Sync received")
                 response = self.getData()
-                if response[3] == "ACK":
+                if response[3] == "sync" or "ACK":
                     print("ACK received")
                     return True
             else:

@@ -115,6 +115,7 @@ class RX(object):
             if (eop != -1):
                 self.found = True
                 headpayload = self.buffer[:eop]
+                self.buffer = self.buffer[eop:]
                 return headpayload
                 
 
