@@ -116,7 +116,9 @@ class RX(object):
                 self.found = True
                 self.threadPause()
                 headpayload = self.buffer[:eop]
+                print("HEADPAYLOAD", headpayload)
                 self.buffer = self.buffer[eop:]
+                print("BUFFER", self.buffer)
                 self.threadResume()
                 return headpayload
                 

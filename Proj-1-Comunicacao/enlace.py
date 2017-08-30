@@ -91,22 +91,26 @@ class enlace(object):
                 print("Sync received")
                 self.sendSync()
                 self.sendACK()
-                print("Ready to receive package")
-                return True
+                response = self.getData()
+                if response[3] == "ACK":
+                    print(")
+                    print("Ready to receive package")
+                    return True
             else:
                 return False
 
         
     def establishConnection(self):
-        self.sendSync()
         while self.connected ==  False:
+            self.sendSync()
             response = self.getData()
-            print("Waiting sync..")
+            print("Waiting sync...")
             if response[3] == "ACK" or "sync":
                 print("Sync received")
                 response = self.getData()
                 if response[3] == "sync" or "ACK":
                     print("ACK received")
+                    self.sendACK()
                     return True
             else:
                 return False                    
