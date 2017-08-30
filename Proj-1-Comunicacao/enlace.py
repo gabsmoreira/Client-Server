@@ -90,10 +90,11 @@ class enlace(object):
             if response[3] == "sync":
                 print("Sync received")
                 self.sendSync()
+                time.sleep(0.5)
                 self.sendACK()
+                print("ACK SENT")
                 response = self.getData()
                 if response[3] == "ACK":
-                    print(")
                     print("Ready to receive package")
                     return True
             else:
@@ -110,6 +111,7 @@ class enlace(object):
                 response = self.getData()
                 if response[3] == "sync" or "ACK":
                     print("ACK received")
+                    time.sleep(0.5)
                     self.sendACK()
                     return True
             else:

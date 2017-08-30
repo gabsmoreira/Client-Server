@@ -9,6 +9,7 @@
 
 # Importa pacote de tempo
 import time
+import binascii
 
 # Threads
 import threading
@@ -37,6 +38,7 @@ class RX(object):
                 rxTemp, nRx = self.fisica.read(self.READLEN)
                 if (nRx > 0):
                     self.buffer += rxTemp
+                # print(binascii.hexlify(self.buffer))
                 time.sleep(0.001)
 
     def threadStart(self):
@@ -113,11 +115,10 @@ class RX(object):
         while(self.found ==  False):
             eop = self.buffer.find(b'\xfa\xf8\xf3\xf5')
             if (eop != -1):
-                self.found = True
                 self.threadPause()
                 headpayload = self.buffer[:eop]
                 print("HEADPAYLOAD", headpayload)
-                self.buffer = self.buffer[eop:]
+                self.buffer = self.buffer[eop+4:]
                 print("BUFFER", self.buffer)
                 self.threadResume()
                 return headpayload
