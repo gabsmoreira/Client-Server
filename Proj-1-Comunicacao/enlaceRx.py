@@ -114,8 +114,10 @@ class RX(object):
             eop = self.buffer.find(b'\xfa\xf8\xf3\xf5')
             if (eop != -1):
                 self.found = True
+                self.threadPause()
                 headpayload = self.buffer[:eop]
                 self.buffer = self.buffer[eop:]
+                self.threadResume()
                 return headpayload
                 
 
