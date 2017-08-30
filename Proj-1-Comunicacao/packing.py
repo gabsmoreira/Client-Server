@@ -10,11 +10,11 @@ class Package (object):
         if datatype == "data":
             self.dataType = 0x00
         elif datatype == "sync":
-            self.dataType = 0x01
+            self.dataType = 0x10
         elif datatype == "ACK":
-            self.dataType = 0x02
+            self.dataType = 0x11
         elif datatype == "NACK":
-            self.dataType = 0x03
+            self.dataType = 0x12
         
         self.data = data
         if self.data == None:
@@ -46,18 +46,17 @@ class Package (object):
 
 # # Desempacota os dados
 def undoPackage(package):
-    print(package)
     size = int(binascii.hexlify(package[1:3]), 16) 
     # print("size",size)
     type_package = package[3:4]
 
     if type_package == b'\x00':
         type_package = "data"
-    elif type_package == b'\x01':
+    elif type_package == b'\x10':
         type_package = "sync"
-    elif type_package == b'\x02':
+    elif type_package == b'\x11':
         type_package = "ACK"
-    elif type_package == b'\x03':
+    elif type_package == b'\x11':
         type_package = "NACK"
     payload = package[4:] #A partir do 4
     # print("EOP", eop)

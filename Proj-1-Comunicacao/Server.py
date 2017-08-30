@@ -15,7 +15,7 @@ import time
 #   python -m serial.tools.list_ports
 
 #serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
-serialName = "/dev/cu.usbmodem1431" # Mac    (variacao de)
+serialName = "/dev/cu.usbmodem1451" # Mac    (variacao de)
 #serialName = "COM3"                  # Windows(variacao de)
 
 def main():
@@ -47,14 +47,16 @@ def main():
 
     print ("Recebendo dados .... ")
     if com.waitConnection():
+        time.sleep(0.5)
         response = com.getData()
-        while response == None:
-                response = com.getData()
+        print(response)
+        if response == None:
+            response = com.getData()
         rxBuffer, nRx, real_nRx, package_type = response
 
 
         start = time.time()
-        print(nRx)
+        # print(rxBuffer)
 
         
         

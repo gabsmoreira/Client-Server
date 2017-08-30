@@ -114,6 +114,8 @@ class RX(object):
             eop = self.buffer.find(b'\xfa\xf8\xf3\xf5')
             if (eop != -1):
                 self.found = True
-                return self.buffer[:eop]
+                headpayload = self.buffer[:eop]
+                return headpayload
+                
 
     
