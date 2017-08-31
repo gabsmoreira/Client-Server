@@ -16,11 +16,11 @@ import timeit
 #   python -m serial.tools.list_ports
 
 #serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
-serialName = "/dev/cu.usbmodem1451" # Mac    (variacao de)
+#serialName = "/dev/cu.usbmodem1451" # Mac    (variacao de)
 #serialName = "COM3"                  # Windows(variacao de)
 #serialName = "COM3"
 
-def main():
+def main(imageR, serialName):
     # Inicializa enlace
     com = enlace(serialName)
 
@@ -28,7 +28,7 @@ def main():
     com.enable()
 
     # Endereco da imagem a ser transmitida
-    imageR = "./imgs/imageB.png"
+    # imageR = "./imgs/imageB.png"
 
     # Log
     print("-------------------------")

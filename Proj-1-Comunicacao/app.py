@@ -6,6 +6,7 @@ import Tkinter as tk
 import time
 from datetime import datetime
 from PIL import ImageTk, Image
+from tkinter import filedialog
 import Client
 import Server
 
@@ -25,6 +26,7 @@ class Janela_Principal():
         self.window.rowconfigure(2, minsize = 10)
         self.window.rowconfigure(3, minsize = 10)
         self.window.rowconfigure(4, minsize = 10)
+        self.window.rowconfigure(5, minsize = 10)
         self.window.columnconfigure(0, minsize = 10)
         self.window.columnconfigure(1, minsize = 10)
 
@@ -49,14 +51,21 @@ class Janela_Principal():
         # self.button_des = tk.Text(self.window, text = "Disconnect", height = 3, width = 30)
         # self.button_des.grid(row = 3, columnspan = 1)
         # self.button_des.configure(command = self.Send)
+
+        self.var = StringVar(self.window)
+        self.var.set("Choose your port") # initial value
+
+        self.option = OptionMenu(self.window, self.var, "/dev/cu.usbmodem1461","/dev/cu.usbmodem1451", "/dev/cu.usbmodem1441", "/dev/cu.usbmodem1431", "/dev/cu.usbmodem1411","/dev/ttyACM0","/dev/ttyACM1","COM1","COM2","COM3","COM4","COM5","COM6" )
+        self.option.grid(row   = 4)
+
         self.text = "Waiting"
         self.w = Label(self.window, text=self.text,font=("Helvetica", 20))
-        self.w.grid(row = 4, columnspan = 1)
+        self.w.grid(row = 5, columnspan = 1)
         # w.pack()
 
     def refreshText(self,text):
         self.w = Label(self.window, text=text ,font=("Helvetica", 20))
-        self.w.grid(row = 4, columnspan = 1)
+        self.w.grid(row = 5, columnspan = 1)
 
     #Loop do codigo
     def iniciar(self):
@@ -66,14 +75,15 @@ class Janela_Principal():
     def Receive(self):
         self.refreshText("Receiving")
         time.sleep(0.3)
-        self.refreshText(Server.main())
+        self.refreshText(Server.main(self.var.get()))
 
     def Send(self):
+        print(self.var.get())
+        self.window.filename = filedialog.askopenfilename()
         self.refreshText("Sending")
         time.sleep(0.3)
-        self.refreshText(Client.main())
+        self.refreshText(Client.main(self.window.filename,self.var.get()))
 
-    
 
 #Loop do codigo
 app = Janela_Principal()
