@@ -102,20 +102,32 @@ class enlace(object):
 
         
     def establishConnection(self):
+        timeout = False
+        print("Waiting sync...")
+        comeco = time.time()
         while self.connected ==  False:
-            self.sendSync()
-            response = self.getData()
-            print("Waiting sync...")
-            if response[3] == "ACK" or "sync":
-                print("Sync received")
-                response = self.getData()
-                if response[3] == "sync" or "ACK":
-                    print("ACK received")
-                    time.sleep(0.5)
-                    self.sendACK()
-                    return True
+            if timeout:
+                timeout=False
+                comeco = time.time()
+                print("--Waiting sync...")
+                if self.rx.getIsEmpty() == False:
+                    self.sendSync()
+                    response = self.getData()
+                    if response[3] == "ACK" or "sync":
+                        print("Sync received")
+                        response = self.getData()
+                        if response[3] == "sync" or "ACK":
+                            print("ACK received")
+                            time.sleep(0.5)
+                            self.sendACK()
+                            return True
+                    else:
+                        return False      
             else:
-                return False                    
+                if ((time.time() - comeco) > 3):
+                    print ("Passou 3 s")
+                    self.sendSync()
+                    timeout = True
 
 
                     

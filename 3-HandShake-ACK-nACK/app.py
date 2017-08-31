@@ -6,7 +6,6 @@ import Tkinter as tk
 import time
 from datetime import datetime
 from PIL import ImageTk, Image
-from tkinter import filedialog
 import Client
 import Server
 
