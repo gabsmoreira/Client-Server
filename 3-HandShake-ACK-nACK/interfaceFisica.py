@@ -39,7 +39,6 @@ class fisica(object):
                                   self.parity,
                                   self.stop,
                                   self.timeout,
-                                  True
                                   )
         self.flush()
 
