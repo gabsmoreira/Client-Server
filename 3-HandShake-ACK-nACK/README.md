@@ -28,3 +28,7 @@ Além disso, foi implementado também um protocolo de reconhecimento via ACK e n
  Para formar a conexão com o Server, o Client envia um pacote SYN para o Server, que deve responder se ele recebeu esse SYN. Se receber, ele envia um pacote comando ACK, reconhecendo que recebeu o SYN e em seguida envia um SYN para confirmar a conexão. O Client recebe esses pacotes ACK + SYN, e  então responde ACK para confirmar a conexão também. Com a conexão estabelecida, o Client pode começas a enviar os dados normalmente. Se em algum momento um nAck for enviado por alguma das partes, o handshake reinicia. A figura a seguir ilustra esse Handshake, de maneira que a "menina" é o Client e o HD, o Server (a conexão é estabelecida quando ele fica com o check verde):
 
 ![Datagrama](images/Handshake.png)
+
+### Máquinas de Estado
+
+As máquinas de estado avaliam o estado da comunicação entre  o Client e o Server e agem de acordo. Os estados são setados conforme o tempo e os dados recebidos nos pacotes.
