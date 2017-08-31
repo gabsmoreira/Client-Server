@@ -78,11 +78,11 @@ class Janela_Principal():
         self.refreshText(Server.main(self.var.get()))
 
     def Send(self):
-        print(self.var.get())
-        self.window.filename = filedialog.askopenfilename()
-        self.refreshText("Sending")
+        # print(self.var.get())
+        # self.window.filename = filedialog.askopenfilename()
+        # self.refreshText("Sending")
         time.sleep(0.3)
-        self.refreshText(Client.main(self.window.filename,self.var.get()))
+        self.refreshText(Client.main(self.var.get()))
 
 
 #Loop do codigo

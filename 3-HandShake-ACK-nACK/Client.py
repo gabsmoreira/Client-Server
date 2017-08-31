@@ -20,7 +20,7 @@ import timeit
 #serialName = "COM3"                  # Windows(variacao de)
 #serialName = "COM3"
 
-def main(imageR, serialName):
+def main(serialName):
     # Inicializa enlace
     com = enlace(serialName)
 
@@ -28,7 +28,7 @@ def main(imageR, serialName):
     com.enable()
 
     # Endereco da imagem a ser transmitida
-    # imageR = "./imgs/imageB.png"
+    imageR = "./imgs/imageB.png"
 
     # Log
     print("-------------------------")
