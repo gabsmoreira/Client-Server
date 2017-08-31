@@ -32,7 +32,7 @@ class Janela_Principal():
 
 
         #Label
-        self.Logo = ImageTk.PhotoImage(Image.open("python_logo.jpeg"))
+        self.Logo = ImageTk.PhotoImage(Image.open("cat.jpg"))
         self.Logo_label = tk.Label(self.window, image = self.Logo, height = 1, width = 1)
         self.Logo_label.grid(row = 0, column = 0, sticky = "nsew")
 
@@ -46,11 +46,17 @@ class Janela_Principal():
         self.button_Reconhecimento.grid(row   = 2, columnspan = 1)
         self.button_Reconhecimento.configure(command = self.Receive)
 
-        #self.button_des = tk.Button(self.window, text = "Disconnect", height = 3, width = 30)
-        #self.button_des.grid(row = 3, columnspan = 1)
-        #self.button_des.configure(command = self.Send)
+        # self.button_des = tk.Text(self.window, text = "Disconnect", height = 3, width = 30)
+        # self.button_des.grid(row = 3, columnspan = 1)
+        # self.button_des.configure(command = self.Send)
+        self.text = "Waiting"
+        self.w = Label(self.window, text=self.text,font=("Helvetica", 20))
+        self.w.grid(row = 4, columnspan = 1)
+        # w.pack()
 
-
+    def refreshText(self,text):
+        self.w = Label(self.window, text=text ,font=("Helvetica", 20))
+        self.w.grid(row = 4, columnspan = 1)
 
     #Loop do codigo
     def iniciar(self):
@@ -58,10 +64,14 @@ class Janela_Principal():
 
     #Acoes dos botoes
     def Receive(self):
-        Server.main()
+        self.refreshText("Receiving")
+        time.sleep(0.3)
+        self.refreshText(Server.main())
 
     def Send(self):
-        Client.main()
+        self.refreshText("Sending")
+        time.sleep(0.3)
+        self.refreshText(Client.main())
 
     
 

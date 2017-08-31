@@ -59,11 +59,15 @@ def main():
         
         
         lost_bytes = nRx-real_nRx
+
+
+
         # log
         print ("Lido              {} bytes ".format(real_nRx))
         print ("Perdas            {} bytes ".format(lost_bytes))
         stop = time.time()
-
+        if lost_bytes !=0:
+            com.sendNACK()
         # Salva imagem recebida em arquivo
         print("-------------------------")
         print ("Salvando dados no arquivo :")
@@ -81,7 +85,9 @@ def main():
         print("Comunicação encerrada")
         print("-------------------------")
         com.disable()
+        return "File Received"
     else:
+        return "Error"
         f.close()
 
         # Encerra comunicação
@@ -91,5 +97,6 @@ def main():
         print("Comunicação encerrada")
         print("-------------------------")
         com.disable()
+    
         
 
