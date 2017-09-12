@@ -25,7 +25,7 @@ class Package (object):
         
         self.headSTART  = 0xFF
         self.eopSTART = bytearray([0xFA,0xF8,0xF3,0xF5])
-        self.headStruct = Struct("start" / Int8ub, "size"  / Int16ub, "type" / Int8ub )
+        self.headStruct = Struct("start" / Int8ub, "size"  / Int32ub, "type" / Int8ub, "number_packets" / Int16ub, "index" / Int16ub)
                             
         
     # Constroi o HEAD de acordo com as informacoes setadas na funcao __init__ e retorna o HEAD
@@ -46,9 +46,11 @@ class Package (object):
 
 # # Desempacota os dados
 def undoPackage(package):
-    size = int(binascii.hexlify(package[1:3]), 16) 
+    size = int(binascii.hexlify(package[1:5]), 32) 
     # print("size",size)
-    type_package = package[3:4]
+    type_package = package[5:6]
+    number_packets = package[6:8]
+    index = package[8:10]
 
     if type_package == b'\x00':
         type_package = "data"
@@ -58,16 +60,8 @@ def undoPackage(package):
         type_package = "ACK"
     elif type_package == b'\x11':
         type_package = "NACK"
-    payload = package[4:] #A partir do 4
+    payload = package[10:] #A partir do 4
     # print("EOP", eop)
     #print("DATA", data)
-    return (payload,size,type_package)
+    return (payload,size,type_package,number_packets,index)
 
-# elements = [0, 200, 50, 25, 10, 255, 23]
-
-# Create bytearray from list of integers.
-# values = bytearray(elements)
-# a = Package(values,"sync").buildPackage()
-# print("PACKAGE",a)
-# b = undoPackage(a)
-# print(b)

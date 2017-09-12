@@ -33,6 +33,7 @@ class enlace(object):
         self.rx          = RX(self.fisica)
         self.tx          = TX(self.fisica)
         self.connected   = False
+        self.maxbytes    = 2048
 
     def enable(self):
         """ Enable reception and transmission
@@ -80,7 +81,7 @@ class enlace(object):
         print(package)
         data = undoPackage(package)
         #print(data)
-        return(data[0], data[1],(len(data[0])),data[2])
+        return(data[0], data[1],(len(data[0])),data[2],data[3],data[4])
         
 
     def waitConnection(self):
@@ -100,8 +101,18 @@ class enlace(object):
             else:
                 return False
 
-        
-    def establishConnection(self):
+    def howmanyPackets(self, size):
+        list_size=[0]
+        res = size//self.maxbytes
+        for i in range (res):
+            list_size.append(self.maxbytes)
+        list_size.append(size%self.maxbytes)
+        return list_size
+
+
+                    
+                
+    def establishConnection(self,size):    
         while self.connected ==  False:
             self.sendSync()
             response = self.getData()
@@ -115,8 +126,4 @@ class enlace(object):
                     self.sendACK()
                     return True
             else:
-                return False                    
-
-
-                    
-                
+                return False   

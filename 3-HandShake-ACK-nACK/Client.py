@@ -35,21 +35,23 @@ def main(serialName):
     print("Comunicação inicializada")
     print("  porta : {}".format(com.fisica.name))
     print("-------------------------")
-
-
-    if com.establishConnection():
-        # Carrega imagem
-        print ("Carregando imagem para transmissão :")
-        print (" - {}".format(imageR))
-        print("-------------------------")
-        txBuffer = open(imageR, 'rb').read()
-        txLen = (len(txBuffer))
-        print(txLen)
-
-
-        print("Transmitindo .... {} bytes".format(txLen))
-        start = time.time()
-        com.sendData(txBuffer)
+    txBuffer = open(imageR, 'rb').read()
+    txLen = (len(txBuffer))
+    list_size = com.howmanyPackets(txLen)
+    for i in range (1,len(list_size)):
+        begin += list_size[i-1]
+        final += list_size[i]  
+        if com.establishConnection():
+            # Carrega imagem
+            print ("Carregando imagem para transmissão :")
+            print (" - {}".format(imageR))
+            print("-------------------------")
+            txBuffer = open(imageR, 'rb').read()
+            txLen = (len(txBuffer))
+            print(txBuffer)
+            print("Transmitindo .... {} bytes".format(txLen))
+            start = time.time()
+            com.sendData(txBuffer[begin:final])
         
 
 

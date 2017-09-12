@@ -111,6 +111,7 @@ class RX(object):
         """
         self.buffer = b""
 
+
     def getHeadPayload(self):
         while(self.found ==  False):
             eop = self.buffer.find(b'\xfa\xf8\xf3\xf5')
