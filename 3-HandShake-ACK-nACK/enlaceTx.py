@@ -13,6 +13,7 @@ import time
 # Threads
 import threading
 from packing import Package
+import binascii
 # Class
 class TX(object):
     """ This class implements methods to handle the transmission
@@ -35,6 +36,7 @@ class TX(object):
         while not self.threadStop:
             if(self.threadMutex):
                 self.transLen    = self.fisica.write(self.buffer)
+                print("TX",binascii.hexlify(self.buffer))
                 self.threadMutex = False
 
     def threadStart(self):

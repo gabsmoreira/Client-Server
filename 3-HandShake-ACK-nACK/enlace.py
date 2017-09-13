@@ -93,25 +93,29 @@ class enlace(object):
         data = bytes(bytearray())
         while index != number_packets:
             package = self.rx.getHeadPayload()
-            payload, size, type_package, number_packets, index = undoPackage(package)
-            real_size = (len(data[0]))
-            while real_size !=size:
-                self.sendNACK()
-                time.sleep(0.2)
+            if package != None:
                 package = self.rx.getHeadPayload()
+                print(binascii.hexlify(package))
                 payload, size, type_package, number_packets, index = undoPackage(package)
-                real_size = (len(data[0]))
+                real_size = (len(payload))
+            while real_size != size:
+                if package != None:
+                    self.sendNACK()
+                    time.sleep(0.2)
+                    package = self.rx.getHeadPayload()
+                    print(binascii.hexlify(package))
+                    payload, size, type_package, number_packets, index = undoPackage(package)
+                    real_size = (len(payload))
             data +=payload
-            
-
         return(data, size, real_size, type_package)  
-
 
     def waitConnection(self):
         print("SERVER")
+        time.sleep(2)
         response = self.getData()
+        print(response)
         while response[3] != "sync":
-            self.sendNACK()
+            #self.sendNACK()
             time.sleep(0.15)
             response = self.getData()
         print("SYNC RECEIVED")
@@ -153,10 +157,10 @@ class enlace(object):
         print("SYNC RECEIVED")
         self.sendACK()
         time.sleep(0.15)
-        self.sendData()
+        self.sendData(data)
         while response[3] != "ACK":
             self.sendACK()
             time.sleep(0.15)
-            self.sendData()
+            self.sendData(data)
         print("DATA SENT")
         return True   

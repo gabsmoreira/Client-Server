@@ -47,14 +47,10 @@ class Package (object):
 
 # # Desempacota os dados
 def undoPackage(package):
-    print(binascii.hexlify(package))
     size = int(binascii.hexlify(package[1:3]), 16) 
-    print("size",size)
     type_package = package[3:4]
     number_packets = int(binascii.hexlify(package[4:6]), 16) 
     index = int(binascii.hexlify(package[6:8]), 16) 
-    print("NUMBER", number_packets)
-    print("INDEX", index)
     if type_package == b'\x00':
         type_package = "data"
     elif type_package == b'\x10':
