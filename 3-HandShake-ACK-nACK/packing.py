@@ -32,7 +32,7 @@ class Package (object):
         
     # Constroi o HEAD de acordo com as informacoes setadas na funcao __init__ e retorna o HEAD
     def buildHead(self):
-        head = self.headStruct.build(dict(start = self.headSTART,size  = self.dataLen, type = self.dataType, number_packets = self.number_packets))
+        head = self.headStruct.build(dict(start = self.headSTART,size  = self.dataLen, type = self.dataType, number_packets = self.number_packets, index = self.index))
         # print("HEAD",head)                 
         return(head)
 
