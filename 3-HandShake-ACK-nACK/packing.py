@@ -24,8 +24,8 @@ class Package (object):
             self.dataLen = len(data)
         
         self.headSTART  = 0xFF
-        self.index = '0x{0:04X}'.format(index)
-        self.number_packets = '0x{0:04X}'.format(number_packets)
+        self.index = int('0x{0:04X}'.format(index))
+        self.number_packets = int('0x{0:04X}'.format(number_packets))
         self.eopSTART = bytearray([0xFA,0xF8,0xF3,0xF5])
         self.headStruct = Struct("start" / Int8ub, "size"  / Int32ub, "type" / Int8ub, "number_packets" / Int16ub, "index" / Int16ub)
                             
