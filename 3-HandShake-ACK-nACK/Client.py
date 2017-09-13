@@ -38,30 +38,15 @@ def main(serialName):
     txBuffer = open(imageR, 'rb').read()
     txLen = (len(txBuffer))
     list_size = com.howmanyPackets(txLen)
-    for i in range (1,len(list_size)):
-        begin += list_size[i-1]
-        final += list_size[i]  
-        if com.establishConnection():
-            # Carrega imagem
-            print ("Carregando imagem para transmissão :")
-            print (" - {}".format(imageR))
-            print("-------------------------")
-            txBuffer = open(imageR, 'rb').read()
-            txLen = (len(txBuffer))
-            print(txBuffer)
-            print("Transmitindo .... {} bytes".format(txLen))
-            start = time.time()
-            com.sendData(txBuffer[begin:final])
-        
-
-
+    
+    if com.establishConnection(txBuffer):
+    
         # espera o fim da transmissão
         while(com.tx.getIsBussy()):
             pass
 
         # Encerra comunicação
         stop = time.time()
-        print("Tempo de transmissão:  {} ms ".format((stop-start)*1000))
         print("-------------------------")
         print("Comunicação encerrada")
         print("-------------------------")

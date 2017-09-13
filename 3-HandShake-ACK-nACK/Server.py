@@ -46,61 +46,18 @@ def main(serialName):
     # Faz a recepção dos dados
 
     print ("Recebendo dados .... ")
+    response = com.waitConnection()
+    if response != -1:
+        #DONE LOOP
+        # Salva imagem recebida em arquivo
+        print("-------------------------")
+        print ("Salvando dados no arquivo :")
+        print (" - {}".format(imageW))
+        f = open(imageW, 'wb')
+        f.write(response)
 
-    image = None
-    index = 0
-    number_packets = 1
-    
-    #LOOP
-    while index != number_packets:
-        if com.waitConnection():
-            time.sleep(0.5)
-        response = com.getData()
-        print(response)
-        rxBuffer, nRx, real_nRx, package_type, number_packets, index = response
+        # Fecha arquivo de imagem
+        f.close()
+        com.disable()
 
-        start = time.time()
-        # print(rxBuffer)
-        lost_bytes = nRx-real_nRx
-        # log
-        print ("Perdas            {} bytes ".format(lost_bytes))
-        stop = time.time()
-        if lost_bytes != 0:
-            com.sendNACK()
-        else:
-            image += rxBuffer
-        
-
-
-
-    #DONE LOOP
-    # Salva imagem recebida em arquivo
-    print("-------------------------")
-    print ("Salvando dados no arquivo :")
-    print (" - {}".format(imageW))
-    f = open(imageW, 'wb')
-    f.write(rxBuffer)
-
-    # Fecha arquivo de imagem
-    f.close()
-
-    # Encerra comunicação
-    print("Tempo de transmissão:  {} ms ".format((stop-start)*1000))
-
-    print("-------------------------")
-    print("Comunicação encerrada")
-    print("-------------------------")
-    com.disable()
-    
-    f.close()
-
-    # Encerra comunicação
-    print("Tempo de transmissão:  {} ms ".format((stop-start)*1000))
-
-    print("-------------------------")
-    print("Comunicação encerrada")
-    print("-------------------------")
-    com.disable()
-    
-        
 
