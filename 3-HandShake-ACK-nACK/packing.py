@@ -24,8 +24,8 @@ class Package (object):
             self.dataLen = len(data)
         
         self.headSTART  = 0xFF
-        self.index = int('0x{0:04X}'.format(index))
-        self.number_packets = int('0x{0:04X}'.format(number_packets))
+        self.index = index
+        self.number_packets = number_packets
         self.eopSTART = bytearray([0xFA,0xF8,0xF3,0xF5])
         self.headStruct = Struct("start" / Int8ub, "size"  / Int32ub, "type" / Int8ub, "number_packets" / Int16ub, "index" / Int16ub)
                             
@@ -33,7 +33,7 @@ class Package (object):
     # Constroi o HEAD de acordo com as informacoes setadas na funcao __init__ e retorna o HEAD
     def buildHead(self):
         head = self.headStruct.build(dict(start = self.headSTART,size  = self.dataLen, type = self.dataType, number_packets = self.number_packets, index = self.index))
-        # print("HEAD",head)                 
+        print("HEAD",head)                 
         return(head)
 
     # Constroi o PACKAGE ultilizando as funcoes buildHead e buildEOP, retorna o PACKAGE
