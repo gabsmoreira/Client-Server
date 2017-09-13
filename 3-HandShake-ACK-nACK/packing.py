@@ -27,7 +27,7 @@ class Package (object):
         self.index = index
         self.number_packets = number_packets
         self.eopSTART = bytearray([0xFA,0xF8,0xF3,0xF5])
-        self.headStruct = Struct("start" / Int8ub, "size"  / Int32ub, "type" / Int8ub, "number_packets" / Int16ub, "index" / Int16ub)
+        self.headStruct = Struct("start" / Int8ub, "size"  / Int16ub, "type" / Int8ub, "number_packets" / Int16ub, "index" / Int16ub)
                             
         
     # Constroi o HEAD de acordo com as informacoes setadas na funcao __init__ e retorna o HEAD
@@ -48,11 +48,13 @@ class Package (object):
 
 # # Desempacota os dados
 def undoPackage(package):
-    size = int(binascii.hexlify(package[1:5]), 32) 
-    # print("size",size)
-    type_package = package[5:6]
-    number_packets = int(binascii.hexlify(package[6:8]), 16) 
-    index = int(binascii.hexlify(package[8:10]), 16) 
+    size = int(binascii.hexlify(package[1:3]), 16) 
+    print("size",size)
+    type_package = package[3:4]
+    number_packets = int(binascii.hexlify(package[4:6]), 16) 
+    index = int(binascii.hexlify(package[6:8]), 16) 
+    print("NUMBER", number_packets)
+    print("INDEX", index)
     if type_package == b'\x00':
         type_package = "data"
     elif type_package == b'\x10':
