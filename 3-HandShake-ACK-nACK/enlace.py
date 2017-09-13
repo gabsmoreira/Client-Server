@@ -108,11 +108,13 @@ class enlace(object):
 
 
     def waitConnection(self):
+        print("SERVER")
         response = self.getData()
         while response[3] != "sync":
             self.sendNACK()
             time.sleep(0.15)
             response = self.getData()
+        print("SYNC RECEIVED")
         self.sendSync()
         time.sleep(0.5)
         self.sendACK()
@@ -126,15 +128,17 @@ class enlace(object):
             self.sendACK()
             time.sleep(0.15)
             response = self.getData()
+        print("ACK RECEIVED")
         response = self.getData()
         while response[3] != "data":
             self.sendNACK()
             time.sleep(0.15)
             response = self.getData()
-        
+        print("DATA RECEIVED")
         return response
                     
     def establishConnection(self,data):
+        print("CLIENT")
         self.sendSync()
         time.sleep(0.5)
         response = self.getData()
@@ -142,9 +146,11 @@ class enlace(object):
             self.sendSync()
             time.sleep(0.5)
             response = self.getData()
+        print("ACK RECEIVED")
         response = self.getData()
         while response[3] != "ACK" or "sync":
             response = self.getData()
+        print("SYNC RECEIVED")
         self.sendACK()
         time.sleep(0.15)
         self.sendData()
@@ -152,4 +158,5 @@ class enlace(object):
             self.sendACK()
             time.sleep(0.15)
             self.sendData()
+        print("DATA SENT")
         return True   
