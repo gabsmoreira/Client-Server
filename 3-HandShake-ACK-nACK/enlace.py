@@ -22,7 +22,6 @@ from enlaceTx import TX
 from packing import *
 from packing import Package
 
-
 class enlace(object):
     """ This class implements methods to the interface between Enlace and Application
     """
@@ -54,12 +53,24 @@ class enlace(object):
     ################################
     # Application  interface       #
     ################################
-    def sendData(self, data, index, number_packets):
+    def howmanyPackets(self, size):
+        list_size=[0]
+        res = size//self.maxbytes
+        for i in range (res):
+            list_size.append(self.maxbytes)
+        list_size.append(size%self.maxbytes)
+        return list_size
+
+    def sendData(self, data):
         """ Send data over the enlace interface
         """
-        package = Package(data,"data",index,number_packets).buildPackage()
-        self.tx.sendBuffer(package)
-
+        howmanyPackets = self.howmanyPackets((len(data)))
+        for i in range (1,len(howmanyPackets)):
+            begin = howmanyPackets[i-1] + 1
+            end = howmanyPackets[i]
+            actual_data = data[begin:end]
+            package = Package(actual_data,"data",howmanyPackets[i],i).buildPackage()
+            self.tx.sendBuffer(package)
 
     def sendACK(self):
         package = Package(None,"ACK",1,1).buildPackage()
@@ -77,75 +88,68 @@ class enlace(object):
         """ Get n data over the enlace interface
         Return the byte array and the size of the buffer
         """
-        
-        package = self.rx.getHeadPayload()
-        print(package)
-        data = undoPackage(package)
-        #print(data)
-        return(data[0], data[1],(len(data[0])),data[2],data[3],data[4])
-        
+        index = 0
+        number_packets = 1
+        data = bytes(bytearray())
+        while index != number_packets:
+            package = self.rx.getHeadPayload()
+            payload, size, type_package, number_packets, index = undoPackage(package)
+            real_size = (len(data[0]))
+            while real_size !=size:
+                self.sendNACK()
+                time.sleep(0.2)
+                package = self.rx.getHeadPayload()
+                payload, size, type_package, number_packets, index = undoPackage(package)
+                real_size = (len(data[0]))
+            data +=payload
+            
+
+        return(data, size, real_size, type_package)  
+
 
     def waitConnection(self):
-        number_packets = 1
-        index = 0
-        image = None
-        while number_packets != index:
-            while self.connected ==  False:
-                response = self.getData()
-                print("Waiting sync...")
-                if response[3] == "sync":
-                    print("Sync received")
-                    self.sendSync()
-                    time.sleep(0.5)
-                    self.sendACK()
-                    print("ACK SENT")
-                    response = self.getData()
-                    if response[3] == "ACK":
-                        print("Ready to receive package")
-                        time.sleep(0.5)
-                        response = com.getData()
-                        rxBuffer, nRx, real_nRx, package_type, number_packets, index = response
-                        lost_bytes = nRx-real_nRx
-                        if lost_bytes != 0:
-                            com.sendNACK()
-                            print("BYTES PERDIDOS", lost_bytes)
-                        else:
-                            image += rxBuffer
-                else:
-                    return -1
-        return image
-
-
-
-    def howmanyPackets(self, size):
-        list_size=[0]
-        res = size//self.maxbytes
-        for i in range (res):
-            list_size.append(self.maxbytes)
-        list_size.append(size%self.maxbytes)
-        return list_size
-
-
+        response = self.getData()
+        while response[3] != "sync":
+            self.sendNACK()
+            time.sleep(0.15)
+            response = self.getData()
+        self.sendSync()
+        time.sleep(0.5)
+        self.sendACK()
+        time.sleep(0.15)
+        response = self.getData()
+        while response[3] != "ACK":
+            self.sendNACK()
+            time.sleep(0.15)
+            self.sendSync()
+            time.sleep(0.5)
+            self.sendACK()
+            time.sleep(0.15)
+            response = self.getData()
+        response = self.getData()
+        while response[3] != "data":
+            self.sendNACK()
+            time.sleep(0.15)
+            response = self.getData()
+        
+        return response
                     
-                
     def establishConnection(self,data):
-        howmanyPackets = self.howmanyPackets(len(data))
-        for i in range (1,len(howmanyPackets)):
-            begin = howmanyPackets[(i-1)+1]
-            final = howmanyPackets[i]
-            actual_data = data[begin:final]
-            while self.connected ==  False: 
-                self.sendSync()
-                response = self.getData()
-                print("Waiting sync...")
-                if response[3] == "ACK" or "sync":
-                    print("Sync received")
-                    response = self.getData()
-                    if response[3] == "sync" or "ACK":
-                        print("ACK received")
-                        time.sleep(0.5)
-                        self.sendACK()
-                        self.sendData(actual_data,len(howmanyPackets),i)
-                        return True
-                else:
-                    return False   
+        self.sendSync()
+        time.sleep(0.5)
+        response = self.getData()
+        while response[3] != "ACK" or "sync":
+            self.sendSync()
+            time.sleep(0.5)
+            response = self.getData()
+        response = self.getData()
+        while response[3] != "ACK" or "sync":
+            response = self.getData()
+        self.sendACK()
+        time.sleep(0.15)
+        self.sendData()
+        while response[3] != "ACK":
+            self.sendACK()
+            time.sleep(0.15)
+            self.sendData()
+        return True   

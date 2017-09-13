@@ -47,17 +47,16 @@ def main(serialName):
 
     print ("Recebendo dados .... ")
     response = com.waitConnection()
-    if response != -1:
-        #DONE LOOP
-        # Salva imagem recebida em arquivo
-        print("-------------------------")
-        print ("Salvando dados no arquivo :")
-        print (" - {}".format(imageW))
-        f = open(imageW, 'wb')
-        f.write(response)
+    #DONE LOOP
+    # Salva imagem recebida em arquivo
+    print("-------------------------")
+    print ("Salvando dados no arquivo :")
+    print (" - {}".format(imageW))
+    f = open(imageW, 'wb')
+    f.write(response)
 
-        # Fecha arquivo de imagem
-        f.close()
-        com.disable()
+    # Fecha arquivo de imagem
+    f.close()
+    com.disable()
 
 

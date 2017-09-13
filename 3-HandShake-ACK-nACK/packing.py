@@ -33,7 +33,6 @@ class Package (object):
     # Constroi o HEAD de acordo com as informacoes setadas na funcao __init__ e retorna o HEAD
     def buildHead(self):
         head = self.headStruct.build(dict(start = self.headSTART,size  = self.dataLen, type = self.dataType, number_packets = self.number_packets, index = self.index))
-        print("HEAD",head)                 
         return(head)
 
     # Constroi o PACKAGE ultilizando as funcoes buildHead e buildEOP, retorna o PACKAGE
@@ -48,6 +47,7 @@ class Package (object):
 
 # # Desempacota os dados
 def undoPackage(package):
+    print(binascii.hexlify(package))
     size = int(binascii.hexlify(package[1:3]), 16) 
     print("size",size)
     type_package = package[3:4]
@@ -61,7 +61,7 @@ def undoPackage(package):
         type_package = "sync"
     elif type_package == b'\x11':
         type_package = "ACK"
-    elif type_package == b'\x11':
+    elif type_package == b'\x12':
         type_package = "NACK"
     payload = package[10:] #A partir do 4
     # print("EOP", eop)

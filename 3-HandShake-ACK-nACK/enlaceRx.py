@@ -118,9 +118,7 @@ class RX(object):
             if (eop != -1):
                 self.threadPause()
                 headpayload = self.buffer[:eop]
-                print("HEADPAYLOAD", headpayload)
                 self.buffer = self.buffer[eop+4:]
-                print("BUFFER", self.buffer)
                 self.threadResume()
                 return headpayload
                 
