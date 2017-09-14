@@ -93,17 +93,14 @@ class enlace(object):
         data = bytes(bytearray())
         while index != number_packets:
             package = self.rx.getHeadPayload()
-            if package != None:
-                package = self.rx.getHeadPayload()
-                print(binascii.hexlify(package))
-                payload, size, type_package, number_packets, index = undoPackage(package)
-                real_size = (len(payload))
-            while real_size != size:
-                if package != None:
+            print("OPA",binascii.hexlify(package))
+            payload, size, type_package, number_packets, index = undoPackage(package)
+            real_size = (len(payload))
+            if type_package ==  "data":
+                while real_size != size:
                     self.sendNACK()
                     time.sleep(0.2)
                     package = self.rx.getHeadPayload()
-                    print(binascii.hexlify(package))
                     payload, size, type_package, number_packets, index = undoPackage(package)
                     real_size = (len(payload))
             data +=payload
@@ -119,18 +116,19 @@ class enlace(object):
             time.sleep(0.15)
             response = self.getData()
         print("SYNC RECEIVED")
-        self.sendSync()
-        time.sleep(0.5)
         self.sendACK()
+        self.sendSync()
         time.sleep(0.15)
         response = self.getData()
+        print(response[3])
         while response[3] != "ACK":
-            self.sendNACK()
             time.sleep(0.15)
             self.sendSync()
             time.sleep(0.5)
             self.sendACK()
             time.sleep(0.15)
+            print(response[3])
+
             response = self.getData()
         print("ACK RECEIVED")
         response = self.getData()
@@ -146,13 +144,15 @@ class enlace(object):
         self.sendSync()
         time.sleep(0.5)
         response = self.getData()
-        while response[3] != "ACK" or "sync":
+        print(response[3])
+        while response[3] != "ACK" or response[3] != "sync":
             self.sendSync()
             time.sleep(0.5)
             response = self.getData()
         print("ACK RECEIVED")
         response = self.getData()
-        while response[3] != "ACK" or "sync":
+        print(response[3])
+        while response[3] != "ACK" or response[3] != "sync":
             response = self.getData()
         print("SYNC RECEIVED")
         self.sendACK()

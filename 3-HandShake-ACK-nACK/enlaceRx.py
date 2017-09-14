@@ -113,10 +113,9 @@ class RX(object):
 
 
     def getHeadPayload(self):
-        headpayload = None
         while(self.found ==  False):
             eop = self.buffer.find(b'\xfa\xf8\xf3\xf5')
-            #print(eop)
+            #print("BUFFER",binascii.hexlify(self.buffer))
             if (eop != -1):
                 self.threadPause()
                 headpayload = self.buffer[:eop]
