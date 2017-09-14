@@ -53,7 +53,7 @@ def main(serialName):
     print ("Salvando dados no arquivo :")
     print (" - {}".format(imageW))
     f = open(imageW, 'wb')
-    f.write(response)
+    f.write(response[0])
 
     # Fecha arquivo de imagem
     f.close()

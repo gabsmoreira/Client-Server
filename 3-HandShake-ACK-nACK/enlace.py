@@ -65,12 +65,19 @@ class enlace(object):
         """ Send data over the enlace interface
         """
         howmanyPackets = self.howmanyPackets((len(data)))
+        print("TAMANHO DATA", len(data))
+        print(howmanyPackets)
+        end = -1
         for i in range (1,len(howmanyPackets)):
-            begin = howmanyPackets[i-1] + 1
-            end = howmanyPackets[i]
+            begin = end + 1
+            end = howmanyPackets[i] + begin -1
+            print("BEGIN",begin)
+            print("END",end)
             actual_data = data[begin:end]
-            package = Package(actual_data,"data",howmanyPackets[i],i).buildPackage()
+            package = Package(actual_data,"data",len(howmanyPackets)-1,i).buildPackage()
+            time.sleep(0.5)
             self.tx.sendBuffer(package)
+            
 
     def sendACK(self):
         package = Package(None,"ACK",1,1).buildPackage()
@@ -92,76 +99,82 @@ class enlace(object):
         number_packets = 1
         data = bytes(bytearray())
         while index != number_packets:
-            time.sleep(1)
+            print("INDEX",index)
+            print("NUMBER",number_packets)
             package = self.rx.getHeadPayload()
-            print("OPA",binascii.hexlify(package))
             payload, size, type_package, number_packets, index = undoPackage(package)
-            real_size = (len(payload))
+            real_size = (len(payload)) + 1
+
+ 
             if type_package ==  "data":
                 while real_size != size:
+                    print("DEU ERRO")
                     self.sendNACK()
                     time.sleep(0.2)
                     package = self.rx.getHeadPayload()
                     payload, size, type_package, number_packets, index = undoPackage(package)
                     real_size = (len(payload))
+            print("TAMANHO CADA PACOTE", real_size)
             data +=payload
+
         return(data, size, real_size, type_package)  
 
     def waitConnection(self):
         print("SERVER")
-        time.sleep(2)
-        response = self.getData()
-        print(response)
+        time.sleep(1)
+        response = self.getData() 
         while response[3] != "sync":
             #self.sendNACK()
             time.sleep(0.15)
             response = self.getData()
         print("SYNC RECEIVED")
         self.sendACK()
+        time.sleep(0.5)
         self.sendSync()
-        time.sleep(0.15)
+        time.sleep(0.5)
         response = self.getData()
-        print(response[3])
         while response[3] != "ACK":
             time.sleep(0.15)
             self.sendSync()
             time.sleep(0.5)
             self.sendACK()
             time.sleep(0.15)
-            print(response[3])
-
             response = self.getData()
         print("ACK RECEIVED")
+        time.sleep(0.5)
         response = self.getData()
-        while response[3] != "data":
-            self.sendNACK()
-            time.sleep(0.15)
-            response = self.getData()
+        
         print("DATA RECEIVED")
         return response
                     
     def establishConnection(self,data):
         print("CLIENT")
         self.sendSync()
-        time.sleep(0.5)
+        time.sleep(1)
         response = self.getData()
+        time.sleep(2)
         print(response[3])
-        while response[3] != "ACK" or response[3] != "sync":
-            self.sendSync()
-            time.sleep(0.5)
-            response = self.getData()
+        # while response[3] != "ACK" or response[3] != "sync":
+        #     print(response)
+        #     self.sendSync()
+        #     time.sleep(0.5)
+        #     response = self.getData()
         print("ACK RECEIVED")
+        time.sleep(1)
         response = self.getData()
+        time.sleep(1)
         print(response[3])
-        while response[3] != "ACK" or response[3] != "sync":
-            response = self.getData()
+        # while response[3] != "ACK" or response[3] != "sync":
+        #     response = self.getData()
         print("SYNC RECEIVED")
         self.sendACK()
         time.sleep(0.15)
         self.sendData(data)
-        while response[3] != "ACK":
-            self.sendACK()
-            time.sleep(0.15)
-            self.sendData(data)
+        print(data)
+        time.sleep(1)
+        # while response[3] != "ACK":
+        #     self.sendACK()
+        #     time.sleep(0.15)
+        #     self.sendData(data)
         print("DATA SENT")
         return True   

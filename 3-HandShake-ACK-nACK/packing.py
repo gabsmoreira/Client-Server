@@ -51,6 +51,10 @@ def undoPackage(package):
     type_package = package[3:4]
     number_packets = int(binascii.hexlify(package[4:6]), 16) 
     index = int(binascii.hexlify(package[6:8]), 16) 
+    print("SIZE", size)
+    
+    print("NUMBER",number_packets)
+    print("INDEX", index)
     if type_package == b'\x00':
         type_package = "data"
     elif type_package == b'\x10':
@@ -59,7 +63,9 @@ def undoPackage(package):
         type_package = "ACK"
     elif type_package == b'\x12':
         type_package = "NACK"
-    payload = package[10:] #A partir do 4
+    payload = package[8:] #A partir do 4
+    print("Type", type_package)
+    print("PAYLOAD", payload)
     # print("EOP", eop)
     #print("DATA", data)
     return (payload,size,type_package,number_packets,index)

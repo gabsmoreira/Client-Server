@@ -28,7 +28,7 @@ def main(serialName):
     com.enable()
 
     # Endereco da imagem a ser transmitida
-    imageR = "./imgs/imageB.png"
+    imageR = "./imgs/imageD.png"
 
     # Log
     print("-------------------------")
