@@ -46,7 +46,7 @@ Em caso de NACK, ou de falta de resposta por um período de tempo (timeout), o(s
 ### CRC
 
 Cyclic Redundancy Check (CRC) é um algoritmo de detecção de erros. Ele se baseia na divisão de polinômios. Para isso, ele analisa os dados como coeficientes de um polinômio e realiza uma divisão binária, aplicando um XOR a cada termo. 
-Nesta divisão o dividendo é igual aos dados, o divisor é o polinômio escolhido como "key" e o resto da divisão é o CRC. Quanto maior o grau do polinomio escolhido como "key", mais precisa será a conta e, portanto, a detecção de erros. Verificamos então:
+Nesta divisão o dividendo é igual aos dados, o divisor é o polinômio escolhido como "key" e o resto da divisão é o CRC. Quanto maior o grau do polinômio escolhido como "key", mais precisa será a conta e, portanto, a detecção de erros. Verificamos então:
 
 * Se o CRC do head calculado confere com o CRC enviado no HEAD
 * Se o CRC do payload calculado confere com o CRC enviado para o payload
