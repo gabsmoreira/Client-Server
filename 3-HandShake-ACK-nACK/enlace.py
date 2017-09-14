@@ -92,6 +92,7 @@ class enlace(object):
         number_packets = 1
         data = bytes(bytearray())
         while index != number_packets:
+            time.sleep(1)
             package = self.rx.getHeadPayload()
             print("OPA",binascii.hexlify(package))
             payload, size, type_package, number_packets, index = undoPackage(package)
