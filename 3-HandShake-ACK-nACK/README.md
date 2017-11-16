@@ -25,8 +25,9 @@ O tamanho do EOP é de 4 bytes.
  
  ### Cálculo do OverHead
  
- T_pc_ = Tamanho do pacote
- T_pl_ = Tamanho do payload
+ Tpc = Tamanho do pacote
+ 
+ Tpl = Tamanho do payload
  
  _OverHead_ = T_pc_/T_pl
 
