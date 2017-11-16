@@ -31,10 +31,31 @@ O tamanho do EOP é de 4 bytes.
  
  _OverHead_ = Tpc/Tpl
  
+ _OverHead_ = (8 + x)/x
+ 
+ #### Exemplo do cálculo
+ 
  Tamanho da imagem usada = 3093 bytes
+ 
  Tamanho do pacote = 3093 + 1 + 2 + 1 + 4
+ 
+ 
+ 
  _OverHead_ = 3101/3093
+ 
  _OverHead_ = 100,258%
+
+### Cálculo do tempo teórico de transmissão de uma imagem qualquer
+Tamanho da imagem = x bytes
+
+Vt = 115200 bits/s (transmissão da porta COM5)
+
+x = tamanho em bytes da imagem
+
+Tamanho do pacote em bits = (x + 8) * 8
+
+Tempo de transmissão = (8x + 64)/115200
+
 
 
 
