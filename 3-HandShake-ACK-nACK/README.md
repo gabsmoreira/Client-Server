@@ -22,6 +22,11 @@ O tamanho do EOP é de 4 bytes.
 
 
  ![Diagrama de funcionamento](images/final.002.jpeg)
+
+
+## Datagrama Proj 2
+
+ ![Datagrama](images/datagrama.png)
  
  ### Cálculo do OverHead
  
@@ -60,10 +65,6 @@ Tempo de transmissão = (8x + 64)/115200
 
 Throughput = Overhead + x bytes
 
-
-## Datagrama Proj 2
-
- ![Datagrama](images/datagrama.png)
 
 ## Documentação projeto 3:
 
