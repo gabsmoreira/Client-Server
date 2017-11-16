@@ -56,7 +56,9 @@ Tamanho do pacote em bits = (x + 8) * 8
 
 Tempo de transmissão = (8x + 64)/115200
 
+### Cálculo do Throughput
 
+Throughput = Overhead + x bytes
 
 
 ## Datagrama Proj 2
