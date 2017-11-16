@@ -8,8 +8,27 @@ Gabriel Moreira e Daniel Ruhman
 
 
 ## Diagrama de funcionamento
+### Descrição do pacote
+HEAD: 
+Start - 1 byte
+Size - 2 bytes
+Type - 1 byte
+
+PAYLOAD:
+O tamanho do payload é o mesmo que o tamanho do arquivo a ser mandado.
+
+EOP:
+O tamanho do EOP é de 4 bytes.
+
 
  ![Diagrama de funcionamento](images/final.002.jpeg)
+ 
+ ### Cálculo do OverHead
+ 
+ T_pc_ = Tamanho do pacote
+ T_pl_ = Tamanho do payload
+ 
+ _OverHead_ = T_pc_/T_pl
 
 
 
