@@ -30,6 +30,11 @@ O tamanho do EOP é de 4 bytes.
  Tpl = Tamanho do payload
  
  _OverHead_ = Tpc/Tpl
+ 
+ Tamanho da imagem usada = 3093 bytes
+ Tamanho do pacote = 3093 + 1 + 2 + 1 + 4
+ _OverHead_ = 3101/3093
+ _OverHead_ = 100,258%
 
 
 
