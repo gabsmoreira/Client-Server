@@ -29,7 +29,7 @@ O tamanho do EOP é de 4 bytes.
  
  Tpl = Tamanho do payload
  
- _OverHead_ = T_pc_/T_pl
+ _OverHead_ = Tpc/Tpl
 
 
 
